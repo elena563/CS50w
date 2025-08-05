@@ -1,12 +1,27 @@
 {% extends "auctions/layout.html" %}
 
 {% block title %}
-    {{ name }}
+    {{ listing.name }}
 {% endblock %}
 
 {% block body %}
-    <p>{{ content|safe }}</p>
+    <h2>{{ listing.name }}</h2>
 
-    <a href="{% url 'edit' title %}">Edit Page</a>
+    <img src="{{ listing.image }}" alt="{{ listing.name }}">
+    <p>{{ listing.description }}</p>
+    <p>Latest price: € {{ listing.price }}</p>
+    <div>
+        <div>
+            {% for comment in listing.comments.all %}
+                <p><strong>{{ comment.author.username }}</strong>: {{ comment.text }}</p>
+            {% endfor %}
+            <form action="{% url 'comment' listing.name %}" method="POST">
+            {% csrf_token %}
+            <textarea name="comment" required></textarea>
+            <input type="submit" value="Submit comment">
+        </div>
+        
+    </form>
+    </div>
 
 {% endblock %}

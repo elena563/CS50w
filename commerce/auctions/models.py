@@ -3,7 +3,8 @@ from django.db import models
 
 
 class User(AbstractUser):
-    pass
+    username = models.CharField(max_length=64, unique=True)
+    password = models.CharField(max_length=64)
 
 
 class Listing(models.Model):
@@ -22,6 +23,7 @@ class Listing(models.Model):
     ]
 
     category = models.CharField(max_length=30, choices=CATEGORIES)
+    owner = models.CharField(max_length=64, null=True)
 
 class Bid(models.Model):
     price = models.FloatField()
@@ -29,6 +31,6 @@ class Bid(models.Model):
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
 
 class Comment(models.Model):
-    listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name="comments")
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField()

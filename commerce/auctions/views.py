@@ -3,8 +3,9 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from .forms import NewListingForm
 
-from .models import User, Listing
+from .models import User, Listing, Comment
 
 
 def index(request):
@@ -63,16 +64,54 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "auctions/register.html")
+    
+
+        
+def create(request):
+    if request.method == 'POST':
+        form = NewListingForm(request.POST)
+        if form.is_valid():
+            listing = form.save(commit=False)
+
+            if Listing.objects.filter(name=listing.name).exists():
+                return render(request, "auctions/create.html", {
+                    'form': form,
+                    "error": "Listing already exists"
+                })
+            listing.owner = request.user
+            
+            listing.save()
+            return HttpResponseRedirect(reverse('listing', args=[listing.name]))
+        else:
+            return render(request, "auctions/create.html", {
+                    'form': NewListingForm(),
+                    "error": "Invalid data"
+                })
+    return render(request, "auctions/create.html", {
+        "form": NewListingForm()
+    })
 
 
 def listing(request, name): 
     listing = Listing.objects.filter(name=name).first()
 
     if listing is not None:
-        return render(request, "auctions/entry.html", {
+        return render(request, "auctions/listing.html", {
             "listing": listing,
         })
     else:
         return render(request, "auctions/index.html", {
             "error": "Listing has been deleted or removed"
         })
+    
+
+def comment(request, name):
+    if request.method == 'POST':
+        listing = Listing.objects.get(name=name)
+        comment_text = request.POST.get("comment")
+        Comment.objects.create(
+            listing=listing,
+            author=request.user,
+            text=comment_text
+        )
+        return HttpResponseRedirect(reverse('listing', args=[listing.name]))

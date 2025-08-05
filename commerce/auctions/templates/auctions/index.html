@@ -6,10 +6,10 @@
     {% if listings %}
         <div class="list-grid">
             {% for l in listings %}
-                <a href="{% url 'listing' listing %}"><div class="listing">
+                <a href="{% url 'listing' l.name %}"><div class="listing">
                     <img src="{{ l.image }}" alt="{{ l.name }}">
                     <h3>{{ l.name }}</h3>
-                    <p>{{ l.price }}</p>
+                    <p>€ {{ l.price }}</p>
                 </div></a>
             {% endfor %}
         </div>
