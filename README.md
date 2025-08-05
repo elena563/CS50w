@@ -3,7 +3,7 @@
 This repository contains my solutions to the CS50x - Web programming with Python and JavaScript course assignments. It covers various topics about how to set up a proper web application.
 
 
-### Projects
+## Projects
 
 #### Project 0 - HTML, CSS
 
@@ -16,3 +16,6 @@ This repository contains my solutions to the CS50x - Web programming with Python
 * create new page
 * edit existing page
 * get random entry page
+
+#### Project 2 - SQL, Models and Migrations
+/commerce:
