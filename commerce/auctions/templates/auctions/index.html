@@ -6,11 +6,14 @@
     {% if listings %}
         <div class="list-grid">
             {% for l in listings %}
-                <a href="{% url 'listing' l.name %}"><div class="listing">
-                    <img src="{{ l.image }}" alt="{{ l.name }}">
-                    <h3>{{ l.name }}</h3>
-                    <p>€ {{ l.price }}</p>
-                </div></a>
+                {% if l.is_active %}
+                    <a href="{% url 'listing' l.name %}"><div class="listing">
+                        <img src="{{ l.image }}" alt="{{ l.name }}">
+                        <h4>{{ l.name }}</h4>
+                        <p>by {{ l.owner }}</p>
+                        <p>€ {{ l.price }}</p>
+                    </div></a>
+                {% endif %}
             {% endfor %}
         </div>
     {% endif %}

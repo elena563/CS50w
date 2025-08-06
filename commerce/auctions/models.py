@@ -24,11 +24,12 @@ class Listing(models.Model):
 
     category = models.CharField(max_length=30, choices=CATEGORIES)
     owner = models.CharField(max_length=64, null=True)
+    is_active = models.BooleanField(default=True)
 
 class Bid(models.Model):
     price = models.FloatField()
     bidder = models.ForeignKey(User, on_delete=models.CASCADE)
-    listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name="bids")
 
 class Comment(models.Model):
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name="comments")

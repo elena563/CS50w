@@ -6,9 +6,34 @@ body {
     display: flex;
     flex-direction: column;
     width: 200px;
-    
+    height: 300px;
+}
+
+.listing img{
+    height: 200px;
+    object-fit: contain;
 }
 
 a, a:hover{
     text-decoration: none;
+    color: black;
+}
+
+.limg{
+    max-width: 70%;
+    max-height: 500px;
+}
+
+form{
+    width: 400px;
+    display: flex;
+    gap: 1em;
+    flex-direction: column;
+}
+
+.list-grid{
+    display: grid;
+    grid-template-columns: repeat(6, 190px);
+    grid-template-rows: repeat(auto-fill, 300px);
+    gap: 1em;
 }
