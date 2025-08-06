@@ -9,9 +9,19 @@ from .forms import NewListingForm
 from .models import User, Listing, Comment, Bid
 
 
-def index(request):
+def index(request, cat=None):
+    if cat:
+        listings = Listing.objects.filter(category=cat)
+    else:
+        listings = Listing.objects.all()
+
+    for l in listings:
+        highest = l.bids.order_by('-price').first()
+        l.highest_bid = highest.price if highest else l.price
+
     return render(request, "auctions/index.html", {
-        "listings": Listing.objects.all()
+        "listings": listings,
+        "cat": cat
     })
 
 
@@ -138,9 +148,37 @@ def bid(request, name):
         return HttpResponseRedirect(reverse('listing', args=[listing.name]))
 
 def cancel(request, name):
+    listing = Listing.objects.get(name=name)
+
     if request.method == "POST":
         listing = Listing.objects.get(name=name)
-        if request.user == listing.owner:
+        print(request.user == listing.owner)
+        if request.user.username == listing.owner:
             listing.is_active = False
             listing.save()
     return HttpResponseRedirect(reverse('listing', args=[listing.name]))
+
+def wishlist(request):
+    return render(request, "auctions/wishlist.html", {
+            "user": request.user,
+        })
+
+def wish(request, name):
+    listing = Listing.objects.get(name=name)
+    if request.user.wished.filter(pk=listing.pk).exists():
+        request.user.wished.remove(listing)
+        return render(request, "auctions/listing.html", {
+                    "listing": listing,
+                "message": "Removed!"
+        })
+    else:
+        request.user.wished.add(listing)
+        return render(request, "auctions/listing.html", {
+            "listing": listing,
+            "message": "Added!"
+        })
+    
+def categories(request):
+    return render(request, "auctions/categories.html", {
+        "categories": Listing.CATEGORIES,
+    })

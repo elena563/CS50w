@@ -29,6 +29,7 @@ form{
     display: flex;
     gap: 1em;
     flex-direction: column;
+    margin-bottom: 1em;
 }
 
 .list-grid{
@@ -36,4 +37,19 @@ form{
     grid-template-columns: repeat(6, 190px);
     grid-template-rows: repeat(auto-fill, 300px);
     gap: 1em;
+}
+
+.btn1{
+    background-color: orange;
+    color: white;
+    border: 1.5px solid orange;
+}
+.btn2{
+    background-color: white;
+    color: orange;
+    border: 1.5px solid orange;
+}
+
+h1, h2{
+    color: orange;
 }

@@ -1,20 +1,22 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    <h2>Active Listings</h2>
-    {% if cat %}<h3>Category: {{ cat }}</h3>{% endif %}
-    {% if listings %}
+    <h2>Your Listings Wishlist</h2>
+
+    {% if user.wished.all|length > 0 %}
         <div class="list-grid">
-            {% for l in listings %}
+            {% for l in user.wished.all %}
                 {% if l.is_active %}
                     <a href="{% url 'listing' l.name %}"><div class="listing">
                         <img src="{{ l.image }}" alt="{{ l.name }}">
                         <h4>{{ l.name }}</h4>
                         <p>by {{ l.owner }}</p>
-                        <p>€ {{ l.highest_bid }}</p>
+                        <p>€ {{ l.price }}</p>
                     </div></a>
                 {% endif %}
             {% endfor %}
         </div>
+    {% else %}
+        <p>Your wishlist is empty, find <a style="text-decoration: underline;" href="{% url 'index' %}">interesting listings</a> to add!</p>
     {% endif %}
 {% endblock %}

@@ -12,4 +12,8 @@ urlpatterns = [
     path("comment/<str:name>/", views.comment, name="comment"),
     path("bid/<str:name>/", views.bid, name="bid"),
     path("cancel/<str:name>/", views.cancel, name="cancel"),
+    path("wishlist", views.wishlist, name="wishlist"),
+    path("wish/<str:name>/", views.wish, name="wish"),
+    path("categories", views.categories, name="categories"),
+    path('category/<str:cat>/', views.index, name='category'),
 ]

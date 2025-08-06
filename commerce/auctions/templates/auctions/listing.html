@@ -8,6 +8,7 @@
     <h2>{{ listing.name }}</h2>
     <img class="limg" src="{{ listing.image }}" alt="{{ listing.name }}">
     <p>Owner: {{ listing.owner }}</p>
+    <p>Category: {{ listing.get_category_display }}</p>
     <p>{{ listing.description }}</p>
     <p>Latest price: € 
         {% if listing.bids.all|length == 0 %}
@@ -27,7 +28,7 @@
                 <form action="{% url 'comment' listing.name %}" method="POST">
                     {% csrf_token %}
                     <textarea name="comment" required></textarea>
-                    <input type="submit" value="Submit comment">
+                    <input type="submit" class="btn1" value="Submit comment">
                 </form>
             </div>
             {% if listing.is_active == True %}
@@ -36,30 +37,43 @@
                         <h3>Your auction</h3>
                         <form action="{% url 'cancel' listing.name %}" method="POST">
                         {% csrf_token %}
-                        <button type="submit">Close auction</button>
+                        <button type="submit" class="btn1">Close auction</button>
                         </form>
-                        <p>Winner will be: {{ highest_bid.bidder.username }} with € {{ highest_bid }}</p>
+                        <p>Winner will be: {{ highest_bid.bidder.username }} with € {{ highest_bid.price }}</p>
                     </div>
                 {% else %}
                     <div>
-                        <h3>Place a bid</h3>
+                        <h3>Get it for you!</h3>
                         <form action="{% url 'bid' listing.name %}" method="POST">
                             {% csrf_token %}
                             <input name="price" type="number" required>
-                            <input type="submit" value="Submit bid">
+                            <input type="submit" class="btn1" value="Submit bid">
                         </form>
                         {% if error %}
                             <p style="color: red;">{{ error }}</p>
                         {% endif %}
+                        <form action="{% url 'wish' listing.name %}" method="POST">
+                            {% csrf_token %}
+                        {% if listing in user.wished.all %}
+                            <input type="submit" class="btn2" value="Remove from wishlist">
+                        {% else %}
+                            <input type="submit" class="btn2" value="Save in wishlist">
+                        {% endif %}
+                        {% if message %}
+                        <p>{{ message }}</p>
+                        {% endif %}
+                        </form>
                     </div>
                 {% endif %}
             {% else %}
-             <h3>The auction is closed</h3>
-                {% if user.username == highest_bid.bidder.username %}
-                    <p>You are the winner!</p>
-                {% else %}
-                    <p>The winner is {{ highest_bid.bidder.username }} with € {{ highest_bid }}</p>
-                {% endif %}
+                <div>
+                    <h3>The auction is closed</h3>
+                    {% if user.username == highest_bid.bidder.username %}
+                        <p>You are the winner!</p>
+                    {% else %}
+                        <p>The winner is {{ highest_bid.bidder.username }} with € <strong>{{ highest_bid.price }}</strong></p>
+                    {% endif %}
+                </div>
             {% endif %}
         </div>
         
