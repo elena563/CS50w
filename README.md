@@ -18,4 +18,12 @@ This repository contains my solutions to the CS50x - Web programming with Python
 * get random entry page
 
 #### Project 2 - SQL, Models and Migrations
-/commerce:
+/commerce: open auctions app where users can sell and buy things
+* dynamic listing page
+* comment, bid, create, close listings
+* watchlist
+* category page and filter by category
+* django admin page
+
+#### Project 3 - JavaScript, User Interfaces
+/mail
