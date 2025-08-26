@@ -26,4 +26,9 @@ This repository contains my solutions to the CS50x - Web programming with Python
 * django admin page
 
 #### Project 3 - JavaScript, User Interfaces
-/mail
+/mail: complete JS logic of an email provider
+* send emails
+* see emails in inbox, sent, archive
+* view an email
+* reply
+* archive and unarchive
