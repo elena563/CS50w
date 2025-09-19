@@ -1,0 +1,8 @@
+.body{
+    padding: 40px;
+}
+
+.btn-cont{
+    display: flex;
+    gap: 10px;
+}

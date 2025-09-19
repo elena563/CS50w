@@ -32,3 +32,6 @@ This repository contains my solutions to the CS50x - Web programming with Python
 * view an email
 * reply
 * archive and unarchive
+
+#### Project 4 - Testing, CI/CD
+/network: build main functionalities of a social network

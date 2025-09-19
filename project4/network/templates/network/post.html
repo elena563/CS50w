@@ -1,0 +1,22 @@
+{% extends "mail/layout.html" %}
+{% load static %}
+
+{% block body %}
+    <div>
+        <h3>New Post</h3>
+        <form id="compose-form">
+            <div class="form-group">
+                <input id="compose-recipients" class="form-control">
+            </div>
+            <div class="form-group">
+                <input class="form-control" id="compose-subject" placeholder="Subject">
+            </div>
+            <textarea class="form-control" id="compose-body" placeholder="Content"></textarea>
+            <input type="submit" class="btn btn-primary"/>
+        </form>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'network/script.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+    {% if user.is_authenticated %}
+                  
+    {% else %}
+        <h1>Join the Network!</h1>
+        <p>Just one click and you'll connect with the world and share something about you</p>
+        <div class="btn-cont">
+            <a href="{% url 'login' %}" type="button" class="btn btn-primary">Log In</a>
+            <a href="{% url 'register' %}" type="button" class="btn btn-secondary">Register</a>
+        </div>
+        
+    {% endif %}
+{% endblock %}
