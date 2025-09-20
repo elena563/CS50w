@@ -3,12 +3,17 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+import json
+from django.http import JsonResponse
 
-from .models import User
+from .models import User, Post
 
 
 def index(request):
-    return render(request, "network/index.html")
+    posts = Post.objects.all().order_by('-timestamp')
+    return render(request, "network/index.html", {"posts": posts})
 
 
 def login_view(request):
@@ -61,3 +66,36 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "network/register.html")
+
+@csrf_exempt
+@login_required
+def post(request):
+    if request.method == "GET":
+        return render(request, "network/post.html")
+    else:
+        print("POST endpoint hit!")
+        data = json.loads(request.body)
+    
+        image = data.get("image", "")
+        content = data.get("content", "")
+
+        post = Post(
+            poster=request.user,
+            image=image,
+            content=content,
+        )
+        post.save()
+
+        return JsonResponse({"message": "Post created successfully."}, status=201)
+    
+@csrf_exempt
+@login_required
+def like_post(request, post_id):
+    if request.method == "POST":
+        post = Post.objects.get(id=post_id)
+    user = request.user
+    if user in post.likes.all():
+        post.likes.remove(user) 
+    else:
+        post.likes.add(user)    
+    return JsonResponse({'likes': post.likes.count()})

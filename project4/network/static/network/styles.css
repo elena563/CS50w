@@ -6,3 +6,20 @@
     display: flex;
     gap: 10px;
 }
+
+.post{
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.like-btn{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+.like-btn:focus{
+    outline: none;
+}

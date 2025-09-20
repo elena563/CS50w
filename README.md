@@ -35,3 +35,6 @@ This repository contains my solutions to the CS50x - Web programming with Python
 
 #### Project 4 - Testing, CI/CD
 /network: build main functionalities of a social network
+* see all posts in homepage
+* create a new post
+* like and unlike a post

@@ -10,3 +10,4 @@ class Post(models.Model):
     content = models.TextField()
     image = models.URLField(blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
+    likes = models.ManyToManyField("User", related_name="liked_posts", blank=True)

@@ -1,22 +1,15 @@
-{% extends "mail/layout.html" %}
+{% extends "network/layout.html" %}
 {% load static %}
 
 {% block body %}
     <div>
         <h3>New Post</h3>
-        <form id="compose-form">
+        <form id="post-form">
             <div class="form-group">
-                <input id="compose-recipients" class="form-control">
+                <input class="form-control" id="image" placeholder="Image URL">
             </div>
-            <div class="form-group">
-                <input class="form-control" id="compose-subject" placeholder="Subject">
-            </div>
-            <textarea class="form-control" id="compose-body" placeholder="Content"></textarea>
+            <textarea style="margin-bottom: 10px;" class="form-control" id="content" placeholder="Content"></textarea>
             <input type="submit" class="btn btn-primary"/>
         </form>
     </div>
-{% endblock %}
-
-{% block script %}
-    <script src="{% static 'network/script.js' %}"></script>
 {% endblock %}
