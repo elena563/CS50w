@@ -5,6 +5,7 @@
 .btn-cont{
     display: flex;
     gap: 10px;
+    margin-bottom: 40px;
 }
 
 .post{
@@ -13,6 +14,14 @@
     padding: 20px;
     margin-bottom: 20px;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+img{
+    max-height: 300px;
+    object-fit: contain;
 }
 
 .like-btn{
@@ -22,4 +31,8 @@
 }
 .like-btn:focus{
     outline: none;
+}
+
+h2, h3{
+    margin-bottom: 20px;
 }

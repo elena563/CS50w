@@ -1,0 +1,55 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+    <h2>@{{ profile_user.username }}</h2>
+    <p>Followers: {{ profile_user.followers.count }} | Following: {{ profile_user.following.count }}</p>
+    {% if user.is_authenticated and user != profile_user %}
+        <form method="POST" action="{% url 'follow' profile_user.username %}">
+            {% csrf_token %}
+            {% if is_following %}
+                <button type="submit" class="btn btn-danger">Unfollow</button>
+            {% else %}
+                <button type="submit" class="btn btn-success">Follow</button>
+            {% endif %}
+        </form>
+    {% endif %}
+    <hr>
+    <h3>Posts by @{{ profile_user.username }}</h3>
+    <div id="posts">
+        {% for post in page_obj %}
+          <div class="post" data-post-id="{{ post.id }}">
+            <p><strong><a href="{% url 'profile' profile_user.username %}">@{{ post.poster }}</a></strong></p>
+            {% if post.image %}
+              <img src="{{ post.image }}" alt="Post image">
+            {% endif %}
+            <p class="post-content" style="margin-top: 10px;">{{ post.content }}</p>
+            <span><button class="like-btn">❤️</button>
+            <span class="like-count">{{ post.likes.count }}</span></span>
+            <p><small>{{ post.timestamp }}</small></p>
+            {% if user == post.poster %}
+              <button class="edit-btn btn btn-primary">Edit</button>
+            {% endif %}
+            <textarea class="edit-area" style="display:none; margin-top: 10px; margin-bottom: 10px;">{{ post.content }}</textarea>
+            <button class="save-btn btn btn-primary" style="display:none;">Save</button>
+            </div>
+        {% endfor %}
+
+         <nav>
+          <ul class="pagination">
+             <span style="display: flex; gap: 10px; align-items:center;">
+              {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">previous</a>
+              {% endif %}
+              <li class="page-item"><span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+              </span></li>
+              {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a></li>
+              {% endif %}
+            </span>
+          </ul>
+        </nav>
+    </div>
+{% endblock %}

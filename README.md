@@ -38,3 +38,6 @@ This repository contains my solutions to the CS50x - Web programming with Python
 * see all posts in homepage
 * create a new post
 * like and unlike a post
+* visit someone's profile
+* see following's posts
+* see posts divided into multiple pages
